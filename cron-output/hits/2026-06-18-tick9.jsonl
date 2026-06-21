@@ -1,0 +1,18 @@
+{"url":"https://x.com/NousResearch/status/2067337553624125621","title":"Nous Portal Teams Billing","source":"x_search","tags":["platform_api","enterprise"],"affects_my_env":false,"first_seen":true}
+{"url":"https://x.com/NousResearch/status/2066921443548348436","title":"Hermes Business Hackathon NVIDIA x Stripe","source":"x_search","tags":["workflow_knowledge","hackathon"],"affects_my_env":false,"first_seen":true}
+{"url":"https://x.com/NousResearch/status/2066647737613832624","title":"Stripe Commerce Skills Launch","source":"x_search","tags":["release","payments"],"affects_my_env":false,"first_seen":true}
+{"url":"https://x.com/NousResearch/status/2066619860852134384","title":"Async Subagents Announced","source":"x_search","tags":["release","async"],"affects_my_env":true,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/issues/27555","title":"P1 vision fallback_chain silently broken","source":"github_api","tags":["bug","vision","P1"],"affects_my_env":true,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/issues/48123","title":"P2 MiniMax tool results serialization","source":"github_api","tags":["bug","minimax","P2"],"affects_my_env":true,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/issues/48157","title":"P1 Docker Windows drive-letter paths","source":"github_api","tags":["bug","docker","P1"],"affects_my_env":false,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/issues/48156","title":"Prevent plaintext API key storage in auth.json","source":"github_api","tags":["security","credential"],"affects_my_env":true,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/issues/48162","title":"Chinese IME input Windows fix","source":"github_api","tags":["bug","cli","P2"],"affects_my_env":false,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/issues/48165","title":"strip_markdown eating bullet lists","source":"github_api","tags":["bug","gateway","P2"],"affects_my_env":true,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/issues/48166","title":"was_auto_reset model override loss","source":"github_api","tags":["bug","gateway","P2"],"affects_my_env":true,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/pull/48147","title":"feat(relay): connector gateway channel auth MERGED","source":"github_api","tags":["feature","relay","merged"],"affects_my_env":false,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/pull/48142","title":"feat: Hermes DB file registry CLOSED","source":"github_api","tags":["feature","db"],"affects_my_env":false,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/pull/48140","title":"fix(desktop): manual model-name input CLOSED","source":"github_api","tags":["bug","desktop"],"affects_my_env":false,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/pull/48109","title":"fix(agent): phantom tool-call loop MERGED","source":"github_api","tags":["bug","agent","merged"],"affects_my_env":true,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/pull/48108","title":"fix(xai): OAuth web_search MERGED","source":"github_api","tags":["bug","xai","merged"],"affects_my_env":false,"first_seen":true}
+{"url":"https://github.com/NousResearch/hermes-agent/pull/48120","title":"fix(cron): localize no-agent failure CLOSED","source":"github_api","tags":["bug","cron"],"affects_my_env":true,"first_seen":true}
+{"url":"https://hermes-agent.nousresearch.com/docs/skills/optional/payments/","title":"Stripe Skills Documentation","source":"x_search","tags":["docs","payments"],"affects_my_env":false,"first_seen":true}

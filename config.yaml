@@ -1,0 +1,168 @@
+model:
+  provider: xai-oauth
+  default: grok-4.3
+fallback_model:
+  provider: minimax-cn
+  model: MiniMax-M3
+providers:
+  xiaomi:
+    base_url: https://token-plan-cn.xiaomimimo.com/v1
+  openai-codex:
+    base_url: https://api.openai.com/v1
+fallback_providers: []
+credential_pool_strategies: {}
+toolsets:
+- web
+- research
+- file
+- skills
+- session_search
+- mcp
+- cronjob
+- delegate_task
+disabled_toolsets:
+- computer_use
+- tts
+- image_gen
+- video_gen
+- spotify
+- homeassistant
+- discord_admin
+- feishu_doc
+- feishu_drive
+- discord
+- x_search
+- kanban
+- yuanbao
+terminal:
+  backend: local
+  cwd: ~/.hermes/profiles/researcher
+  timeout: 120
+  auto_source_bashrc: false
+  deny_patterns:
+  - ~/.hermes/config.yaml
+  - ~/.hermes/auth.json
+  - ~/.hermes/.env
+  - ~/.hermes/profiles/*/SOUL.md
+  - ~/.hermes/profiles/*/config.yaml
+  - ~/.hermes/profiles/*/.env
+  - ~/.hermes/cron/jobs.json
+  - ~/.hermes/webhook_subscriptions.json
+  - ~/.hermes/kanban.db
+agent:
+  max_turns: 30
+  gateway_timeout: 1200
+  gateway_timeout_warning: 600
+  clarify_timeout: 300
+  gateway_auto_continue_freshness: 3600
+  image_input_mode: auto
+  environment_probe: true
+  environment_hint: "researcher profile \u2014 read-only researcher; write only via\
+    \ MCP memory_propose_write"
+  disabled_toolsets: []
+streaming:
+  enabled: true
+  transport: auto
+  edit_interval: 0.8
+  buffer_threshold: 24
+  cursor: " \u2589"
+  fresh_final_after_seconds: 60.0
+  linear: true
+  panel_expanded: false
+  streaming_panel_expanded: false
+  flush_interval_ms: 500
+  print_strategy: delay
+  inject_time: true
+  gateway_cards: true
+display:
+  show_reasoning: false
+  streaming: true
+  timestamps: false
+  tool_progress: all
+  interface: cli
+  personality: kawaii
+  language: zh
+  bell_on_complete: false
+  final_response_markdown: strip
+  inline_diffs: false
+  file_mutation_verifier: true
+  turn_completion_explainer: true
+feishu:
+  require_mention: true
+  auto_deliver: false
+  allowed_groups:
+  - oc_6b75046a9976b395dd92071ff63f9c26
+  - oc_c653562b38ee197f3dce9921ace502c2
+  blocked_groups:
+  - oc_dc991aab29073664930716aa2129bd82
+  - '*'
+platforms:
+  feishu:
+    enabled: false
+  telegram:
+    enabled: false
+  discord:
+    enabled: false
+  slack:
+    enabled: false
+  whatsapp:
+    enabled: false
+  signal:
+    enabled: false
+  matrix:
+    enabled: false
+  mattermost:
+    enabled: false
+  email:
+    enabled: false
+  sms:
+    enabled: false
+  dingtalk:
+    enabled: false
+  wecom:
+    enabled: false
+  weixin:
+    enabled: false
+  qqbot:
+    enabled: false
+  yuanbao:
+    enabled: false
+  webhook:
+    enabled: false
+  api_server:
+    enabled: false
+memory:
+  default_namespace: gc-hermes-researcher
+  allowed_scopes:
+  - private
+  read_scopes:
+  - shared
+  - private:gc-hermes-default
+  - private:gc-hermes-config
+  - private:gc-hermes-chief-agent
+  - private:gc-hermes-pm-orchestrator
+  - private:gc-hermes-dev-worker
+  - private:gc-hermes-qa-worker
+  write_scope: private:gc-hermes-researcher
+  propose_only: true
+mcp_servers:
+  project-memory:
+    enabled: true
+    command: /home/a18845560182/.hermes/hermes-agent/venv/bin/python
+    args:
+    - /home/a18845560182/memory_service/mcp_server.py
+    env:
+      MEMORY_SERVICE_BASE_URL: http://127.0.0.1:18080
+      MEMORY_SERVICE_TIMEOUT: '30'
+      MEMORY_DEFAULT_ORG_ID: gc-hermes
+      MEMORY_DEFAULT_PROJECT_ID: gc-hermes-config
+      MEMORY_DEFAULT_AGENT_ID: gc-hermes-researcher
+      MEMORY_DEFAULT_ROLE: researcher
+      MEMORY_DEFAULT_SESSION_ID: ''
+      MEMORY_DEFAULT_THREAD_ID: ''
+cron:
+  output_dir: ~/.hermes/profiles/researcher/cron/output
+required_env:
+- XIAOMI_API_KEY
+- XIAOMI_BASE_URL
+- HERMES_REDACT_SECRETS

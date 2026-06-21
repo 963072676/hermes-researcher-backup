@@ -1,0 +1,20 @@
+# Hermes self-redaction 保险丝:即使 SOUL/config 误含 secret,这里也兜底
+*.key
+*.pem
+*token*
+*.secret
+.env
+.env.*
+!.env.example
+auth.json
+auth.lock
+gateway_state.json
+
+# 个人缓存
+*.pyc
+__pycache__/
+.DS_Store
+
+# 临时文件
+*.tmp
+*.swp
