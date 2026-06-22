@@ -157,7 +157,13 @@ def guarded_ingest(payload: dict, token: str, script_name: str = "unknown") -> O
 
 
 def main():
+    # no_agent cron 默认跑 `python3 lint_kb_ingest.py` 不带 args
+    # 默认行为: 跑 scan 并把结果 print 到 stdout (cron 会发到飞书)
     if len(sys.argv) > 1 and sys.argv[1] == "scan":
+        mode = "scan"
+    else:
+        mode = "scan"  # 默认也是 scan
+    if mode == "scan":
         print("=== 扫描 KB ingest 漏 context 的代码 ===")
         issues = scan_directory()
         if not issues:
