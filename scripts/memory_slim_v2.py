@@ -195,11 +195,23 @@ def extract_json(text: str) -> Optional[dict]:
 # ---------- KB 写入 ----------
 
 def ingest_to_kb(title: str, content: str, agent_id: str, metadata: dict) -> Optional[str]:
+    """写 KB doc.
+
+    BUG FIX 2026-06-22: 之前没送 context, RequestContext 全 default="" -> 文档被写到
+    空 org/project namespace, list API 查不到。必须显式送 org_id=gc-hermes,
+    project_id=gc-hermes-config 才能和 MCP ingest_text 走同一 namespace。
+    """
     token = read_kb_token()
     if not token:
         print(f"  WARN: no KB token, skip ingest", file=sys.stderr)
         return None
     payload = {
+        "context": {
+            "org_id": "gc-hermes",
+            "project_id": "gc-hermes-config",
+            "agent_id": agent_id,
+            "role": agent_id.replace("gc-hermes-", ""),
+        },
         "title": title,
         "content": content,
         "metadata": {**metadata, "agent_id": agent_id, "ingested_at": datetime.now(timezone.utc).isoformat()},
@@ -215,7 +227,7 @@ def ingest_to_kb(title: str, content: str, agent_id: str, metadata: dict) -> Opt
             body = json.loads(resp.read())
             if body.get("ok"):
                 return body.get("data", {}).get("document_id")
-    except (urllib.error.URLError, urllib.error.HTTPError, json.JSONDecodeError) as e:
+    except Exception as e:
         print(f"  WARN: KB ingest failed: {e}", file=sys.stderr)
     return None
 
