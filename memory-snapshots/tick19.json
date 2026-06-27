@@ -1,0 +1,177 @@
+{
+  "tick": 19,
+  "date": "2026-06-28",
+  "scan_summary": {
+    "github_items": 100,
+    "github_issues": 27,
+    "github_prs": 73,
+    "hn_hits": 18,
+    "openrouter_chinese_models": 91,
+    "arxiv_papers": 0,
+    "repo_pushed_at": "2026-06-27T16:53:30Z",
+    "main_head_sha": "f53b184c48712bcbb98556a6314cd1f240fc104d",
+    "latest_release": "v2026.6.19 (v0.17.0)"
+  },
+  "evolvable_signals": [
+    {
+      "id": "GH-53715",
+      "type": "pr",
+      "priority": "P1",
+      "title": "Fix: Terminal subprocess env leaks AUXILIARY/GATEWAY_RELAY secrets",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/53715",
+      "labels": [
+        "type/security",
+        "comp/tools",
+        "tool/terminal",
+        "backend/docker",
+        "area/auth",
+        "P1",
+        "sweeper:risk-security-boundary"
+      ],
+      "created_at": "2026-06-27T16:33:40Z",
+      "state": "open",
+      "additions": 110,
+      "deletions": 3,
+      "files_changed": 3,
+      "mergeable": true,
+      "affects_my_env": true,
+      "profiles_affected": [
+        "dev",
+        "qa",
+        "researcher",
+        "default"
+      ],
+      "confidence": 1.0
+    },
+    {
+      "id": "GH-53667",
+      "type": "issue",
+      "priority": "P1",
+      "title": "Tool loader collapses to cronjob-only at runtime despite doctor reporting all tools (v0.17.0)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/53667",
+      "labels": [
+        "type/bug",
+        "comp/agent",
+        "P1",
+        "needs-repro"
+      ],
+      "state": "open",
+      "affects_my_env": true,
+      "profiles_affected": [
+        "default",
+        "chief",
+        "dev",
+        "qa",
+        "researcher"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "id": "GH-53697",
+      "type": "issue",
+      "priority": "P2",
+      "title": "Telegram per-platform streaming default bypasses global streaming.enabled=false",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/53697",
+      "labels": [
+        "type/bug",
+        "comp/gateway",
+        "platform/telegram",
+        "P2"
+      ],
+      "state": "open",
+      "affects_my_env": false,
+      "profiles_affected": [
+        "chief"
+      ],
+      "confidence": 0.85
+    },
+    {
+      "id": "GH-53676",
+      "type": "issue",
+      "priority": "P2",
+      "title": "MCP HTTP transport: wigai server fails to initialize, 0 active MCP servers",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/53676",
+      "labels": [
+        "type/bug",
+        "comp/agent",
+        "tool/mcp",
+        "P2",
+        "platform/windows"
+      ],
+      "state": "open",
+      "affects_my_env": true,
+      "profiles_affected": [
+        "default",
+        "researcher"
+      ],
+      "confidence": 0.85
+    }
+  ],
+  "soul_drafts": [
+    {
+      "profile": "dev",
+      "file": "soul-proposals/2026-06-28/dev-terminal-secret-leak.md",
+      "priority": "P1"
+    },
+    {
+      "profile": "chief",
+      "file": "soul-proposals/2026-06-28/chief-p1-triage-workflow.md",
+      "priority": "P1"
+    },
+    {
+      "profile": "researcher",
+      "file": "soul-proposals/2026-06-28/researcher-mcp-write-tool-preference.md",
+      "priority": "P2"
+    },
+    {
+      "profile": "default",
+      "file": "soul-proposals/2026-06-28/default-v017-tool-loader-defensive.md",
+      "priority": "P1"
+    },
+    {
+      "profile": "qa",
+      "file": "soul-proposals/2026-06-28/qa-in-tick-cron-output-backup.md",
+      "priority": "P1"
+    }
+  ],
+  "skill_drafts": [
+    {
+      "name": "secret-leak-pre-check",
+      "file": "skill-proposals/2026-06-28/secret-leak-pre-check.md",
+      "trigger": "GH-53715"
+    },
+    {
+      "name": "hermes-tool-loader-sanity",
+      "file": "skill-proposals/2026-06-28/hermes-tool-loader-sanity.md",
+      "trigger": "GH-53667"
+    },
+    {
+      "name": "cron-output-backup-sentinel",
+      "file": "skill-proposals/2026-06-28/cron-output-backup-sentinel.md",
+      "trigger": "GH-49271"
+    }
+  ],
+  "impact_graph": "cron-output/2026-06-28/impact-graph.md",
+  "audit": "docs/audit/2026-06-28.md",
+  "in_tick_backup": "/tmp/cron_output_backup_2026-06-28/",
+  "mcp_proposed_ids": [
+    {
+      "index": 1,
+      "memory_id": "0133bb27-c474-4a71-a955-3c718948b8cc"
+    },
+    {
+      "index": 2,
+      "memory_id": "3b32b920-1c65-4da7-a5c6-34defd6a6b16"
+    },
+    {
+      "index": 3,
+      "memory_id": "1381567b-fc94-4a42-87dd-9508d0f106e9"
+    },
+    {
+      "index": 4,
+      "memory_id": "f5671010-e34d-4f28-a6e4-11827a163248"
+    }
+  ],
+  "gh_push_status": "PENDING",
+  "feishu_dm_status": "PENDING"
+}
