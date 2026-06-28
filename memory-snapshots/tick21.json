@@ -1,0 +1,60 @@
+{
+  "tick": 21,
+  "date": "2026-06-29",
+  "profile": "researcher",
+  "cron": "hermes-researcher-deep-tick-daily",
+  "model": "xai-oauth/grok-4.3",
+  "scan_window": "2026-06-26 → 2026-06-29 (3d)",
+  "signal_sources": {
+    "github_issues_prs": {"items": 100, "issues": 30, "prs": 70},
+    "hn_algolia": {"queries": 4, "hits_window_3d": 3},
+    "openrouter": {"total_models": 339, "chinese_ish_pct": 27},
+    "arxiv": {"tried": false, "note": "tick19 export endpoint limit, deferred to tick22"}
+  },
+  "dedup": {
+    "baseline_keys_before": 379,
+    "first_seen_raw": 54,
+    "mirrors_filtered": 0,
+    "first_seen_real": 54,
+    "threshold_major_release": "first_seen >= 20 → triggered"
+  },
+  "local_state": {
+    "hermes_version": "v0.17.0 (2026.6.19)",
+    "upstream_pushed_at": "2026-06-28T17:36:23Z",
+    "upstream_releases_latest": "v2026.6.19",
+    "compare_status": "ahead (local staging)"
+  },
+  "proposals": {
+    "soul_drafts": 5,
+    "skill_drafts": 3,
+    "mcp_propose_ok": 4,
+    "mcp_propose_failed": 0,
+    "mcp_propose_ids": [
+      "14ac5a75-bab0-4723-ac74-95ab32e9b4f5",
+      "7902ed53-db25-4297-a867-8e52e7f5c265",
+      "1bf4c154-c251-4baa-8e29-d41e8fe7e411",
+      "019742d7-68ad-4246-8e99-8f1d524a8764"
+    ]
+  },
+  "github_push": {
+    "status": "OK",
+    "commit_sha": "e69244b",
+    "files_changed": 10,
+    "lines_added": 600
+  },
+  "pre_commit_secret_check": "PASS (descriptive words only, no value literals)",
+  "user_ack_24h": {
+    "tick19": "0",
+    "tick20": "0",
+    "tick21": "pending"
+  },
+  "cron_output_backup": "/tmp/cron_output_backup_2026-06-29/",
+  "p1_signals": [
+    {"id": "#54361", "type": "PR", "topic": "deps CVE bump", "severity": "P2", "status": "open+DRAFT"},
+    {"id": "#54340", "type": "PR", "topic": "cost guard auto-block", "severity": "P2", "status": "open"},
+    {"id": "#54288", "type": "Issue", "topic": "cron uses active profile", "severity": "P2", "status": "open"},
+    {"id": "#54329", "type": "Issue", "topic": "deliver=origin silent drop", "severity": "P2", "status": "open"},
+    {"id": "#54305", "type": "Issue", "topic": "URGENT delete PII", "severity": "P2", "status": "open"}
+  ],
+  "notes": "54 first_seen > 20 threshold → 🚨 major release 早期信号, 但本地 v0.17.0 仍是 upstream latest → 等用户手动触发 `hermes update`(本 cron 不调)"
+}
