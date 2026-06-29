@@ -1,0 +1,33 @@
+{
+  "date": "2026-06-30",
+  "tick": 22,
+  "first_seen_count": 100,
+  "baseline_before": 497,
+  "baseline_after": 597,
+  "mcp_proposals": [
+    {
+      "memory_id": "81ec3ed5-bbe9-44f4-92b4-c5c22905b2aa",
+      "type": "bug_impact_matrix",
+      "summary": "P0 #55029 cross-session cache scope"
+    },
+    {
+      "memory_id": "c99ec6e2-53a7-46b8-8c5b-f1c8d0e93d73",
+      "type": "bug_impact_matrix",
+      "summary": "P0 #55013 cross-process guard"
+    },
+    {
+      "memory_id": "e9b1c9a1-6c78-4c71-8294-5a7a1d23c370",
+      "type": "bug_impact_matrix",
+      "summary": "P0 #55030 MoA KV-cache"
+    },
+    {
+      "memory_id": "7c32c5c2-be7b-4f03-9647-8c99334e42d3",
+      "type": "platform_api",
+      "summary": "OpenRouter snapshot 2026-06-30"
+    }
+  ],
+  "soul_drafts": 5,
+  "skill_drafts": 3,
+  "impact_graph": true,
+  "audit": true
+}
