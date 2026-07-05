@@ -1,0 +1,65 @@
+{
+  "tick": 27,
+  "date": "2026-07-05",
+  "profile": "researcher",
+  "model": "xai-oauth/grok-4.3",
+  "scanned": {
+    "github_3d_items": 100,
+    "github_pages_scanned": 3,
+    "openrouter_models": 340,
+    "arxiv_papers_cs_ma": 20,
+    "arxiv_papers_cs_cl": 20,
+    "hn_fresh_in_3d": 0
+  },
+  "priorities": {
+    "p0_open": 0,
+    "p1_open": 8,
+    "p1_closed_merged_24h": 6
+  },
+  "mcp_propose_write": [
+    {
+      "i": 1,
+      "memory_type": "bug_impact_matrix",
+      "status": "pending_review",
+      "memory_id": "e5589707-40d0-41cc-8239-c5d363381b20",
+      "decision": "",
+      "http_error": null
+    },
+    {
+      "i": 2,
+      "memory_type": "bug_impact_matrix",
+      "status": "pending_review",
+      "memory_id": "3c6e2ab9-cac9-4cf4-a7b7-aaf13fb7b94e",
+      "decision": "",
+      "http_error": null
+    },
+    {
+      "i": 3,
+      "memory_type": "release_summary",
+      "status": "pending_review",
+      "memory_id": "336fd531-d27d-40c0-aeeb-3909e223e08d",
+      "decision": "",
+      "http_error": null
+    },
+    {
+      "i": 4,
+      "memory_type": "platform_api",
+      "status": "pending_review",
+      "memory_id": "acbb6eee-874a-43f7-8020-825f4ef57bda",
+      "decision": "",
+      "http_error": null
+    }
+  ],
+  "key_signals": [
+    "#58818 silent-fail cron delivery \u2014 3 PRs same root cause",
+    "#58720 cron RuntimeError after interpreter shutdown",
+    "#58755 DeepSeek v4 Flash HTTP 400 on empty tool_calls",
+    "#59004 Windows installer ships merge conflict markers",
+    "#57838 PR for desktop update marker (still open)",
+    "OpenRouter Chinese share 31.8% (up from 27% tick23-25)",
+    "MiniMax-M3 stable 0.30/1.20 USD per million tokens"
+  ],
+  "self_downgrade_streak": 4,
+  "self_downgrade_recommendation": "maintain daily cadence (P1 spike to 8 + cross-month silent-fail family)",
+  "adoption_rate_7d_avg_pct": 6.5
+}

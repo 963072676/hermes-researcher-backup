@@ -1,73 +1,53 @@
 ---
-name: hermes-cron-silent-fail-probe
-description: Hermes cron worker 端 silent-fail 三层防御 skill。Use when: research/chief/pm 任一 cron 跑完后,需 probe 是否 silent dropped(adapter WS reconnect 失败 / send_message 被 streaming 抑制 / retry exhausted)。覆盖 issue #58363 + #58379 + #50733 + #54329 + #49334 family — 5 个独立 cron delivery silent-fail pattern 已 confirmed sys-level。
+name: cron-silent-fail-probe
+description: 针对 cron delivery silent-fail cluster (#58818/#58720/#58755 等)的探针工具。Use when: 用户报告"cron 任务没执行"或"消息没收到"时,或 chief-agent 收到 silent-fail 升级,或 researcher tick 报 silent-fail P1 涌现。本 skill 跑一次 fail-injection 探针,定位是 gateway restart / interpreter shutdown / strict API reject 三类中的哪一种。
 ---
 
-# hermes-cron-silent-fail-probe
+# cron-silent-fail-probe
 
 ## 何时调用
 
-- 任意 cron job 跑完后,主动调一次 `cron_silent_fail_probe(target, message)` 验证 delivery 是否真到达
-- chief / pm 在 daily audit 时跑批量 `cron_silent_fail_audit()` 收 24h cron delivery receipt
-- researcher / dev / qa 在新 cron spec 上线前,跑 `cron_silent_fail_dryrun()` smoke test
+- 用户 / chief / dev 报 "cron 任务没执行"或"消息没收到"或"cron 跑了但 receipt 没看到"
+- researcher tick 报 silent-fail cron cluster P1 涌现
+- 升级人工条件触发:same root cause 24h 内 ≥ 3 PR
 
 ## 标准流程
 
-### Layer 1 - pre-delivery probe(主动)
+1. **收集 baseline**:
+   ```bash
+   # 跑前先列 active cron jobs
+   hermes cron list --json | jq '.[] | {id, schedule, last_run, last_status}'
+   ```
 
-```python
-def diagnose_delivery_path(target: str) -> dict:
-    """
-    对 feishu / yuanbao / qqbot / lark-streaming 任一 adapter:
-    拉 health + last-reconnect-time + last-send-success
-    return: {target, healthy, last_reconnect_seconds_ago, last_send_ok, suggested_fallback}
-    """
-    # 1. adapter.health_check(target) → bool
-    # 2. adapter.last_reconnect(target) → epoch seconds
-    # 3. adapter.last_send_success(target) → epoch seconds
-    # 4. 若 any unhealthy OR last_reconnect < 30s OR last_send_ok is None:
-    #    suggest_fallback = "feishu:oc_c653562b" (DM 是 reliable fallback)
-    # 5. raise SilentFailRisk if suggest_fallback != target
-```
+2. **3 类 fail-injection probe** (按顺序跑,失败即停):
+   - **Probe A — gateway planned-restart race**:
+     ```bash
+     # 在 cron 触发后 100ms 内 SIGTERM gateway
+     # 验证 receipt 是否出现
+     ```
+   - **Probe B — interpreter shutdown race**:
+     ```bash
+     # 让 agent.close() 与 _deliver_result() 并发
+     # 验证 RuntimeError 是否进 dead-letter
+     ```
+   - **Probe C — strict API reject**:
+     ```bash
+     # 构造空 tool_calls array, 验证 DeepSeek / strict API 是否 400
+     # 验证 repair_message_sequence 是否提前过滤
+     ```
 
-### Layer 2 - post-delivery verification(60s 内核对)
-
-```python
-def verify_delivery(target: str, message_id: str) -> bool:
-    """
-    Tool return success: True 不等于 message 真的送达
-    必须拉 read-receipt / ack / 内部 mirror state 二次确认
-    """
-    # 1. await adapter.get_message_receipt(target, message_id) → bool
-    # 2. compare with previous probe — 若不一致 → silent fail
-    # 3. return True iff receipt confirmed
-```
-
-### Layer 3 - daily silent-fail audit(08:00 UTC)
-
-```python
-def audit_24h_silent_fails() -> dict:
-    """
-    24h cron delivery audit:
-    compare cron run_log (success_count) vs delivery receipt (actual_reached_count)
-    """
-    # 1. 拉过去 24h 所有 cron job run_log from ~/.hermes/cron/output/*
-    # 2. 拉 adapter 端 delivery receipt (24h aggregate per adapter)
-    # 3. mismatch = silent fail
-    # 4. 若 mismatch > 5% → trigger 🚨 event
-```
+3. **输出诊断**:
+   - 三类 probe 全部 exit 0 → silent-fail 不是这 3 类,转 general async race 排查
+   - Probe A fail → 推荐 PR #58874 / #58992 任一
+   - Probe B fail → 推荐 PR #58777
+   - Probe C fail → 推荐 dev-worker 加 deepseek adapter(per SOUL tick27 draft)
 
 ## 何时不该调用
 
-- 同步实时用户对话(realtime 用户对话有 read-receipt 自然 indication)
-- 用户的 deliver target 不在 adapter 列表(裸 IP / raw socket)
+- 用户报 "cron 完全没触发"(schedule 解析问题)— 用 `hermes cron list` 看 last_run,不需 silent-fail probe
+- silent-fail 不是用户报,只是 researcher tick 观察 — 直接报 chief-agent,不调 probe
 
 ## 验证
 
-- 三层都是可单测:
-  - mock adapter.health_check / last_reconnect / last_send_ok
-  - verify_delivery 必须区分 success: True vs receipt: True
-  - audit_24h 跑 fixture (cron_run_log + adapter_receipt list)
-- regression test 必须在 `tests/hermes_cron_silent_fail/test_three_layer.py`:
-  - 4 个 silent-fail scenario(from issue #58363 + #58379 + #50733 + #54329)
-  - 每个 scenario verify 三个 layer 都 catch
+- Probe 三类都要 exit 0 才算 skill 跑通
+- 失败时必须输出 silent_fail_class 字段(A / B / C / unknown),便于 SOUL draft 跟进
